@@ -1,5 +1,6 @@
 from flask_restx.reqparse import RequestParser
 
+
 def add_flight_arguments(parser: RequestParser) -> RequestParser:
     """add flight arguments for the FlightForesight API endpoints.
 
@@ -10,66 +11,48 @@ def add_flight_arguments(parser: RequestParser) -> RequestParser:
         parser (RequestParser): updated request argument parser
     """
     parser.add_argument(
-        "DIA",
-        type=int, 
-        help="Día que se tomara el vuelo.",
-        required=True
+        "DIA", type=int, help="Día que se tomara el vuelo.", required=True
     )
-    
+
     parser.add_argument(
-        "MES",
-        type=int, 
-        help="Mes que se tomara el vuelo.",
-        required=True
+        "MES", type=int, help="Mes que se tomara el vuelo.", required=True
     )
 
     parser.add_argument(
         "temporada_alta",
-        type=int, 
+        type=int,
         help="1 si es temporada alta, 0 si no.",
-        required=True
+        required=True,
     )
 
     parser.add_argument(
         "DIANOM",
-        type=str, 
+        type=str,
         help="Día de la semana de operacion del vuelo.",
-        required=True
+        required=True,
     )
 
     parser.add_argument(
         "TIPOVUELO",
-        type=str, 
+        type=str,
         help="Tipo de vuelo, I = internacional, N = Nacional.",
-        required=True
+        required=True,
     )
 
     parser.add_argument(
-        "OPERA",
-        type=str, 
-        help="Nombre de aerolinea que opera",
-        required=True
+        "OPERA", type=str, help="Nombre de aerolinea que opera", required=True
     )
 
     parser.add_argument(
-        "SIGLAORI",
-        type=str, 
-        help="Nombre ciudad de origen",
-        required=True
+        "SIGLAORI", type=str, help="Nombre ciudad de origen", required=True
     )
 
     parser.add_argument(
-        "SIGLADES",
-        type=str, 
-        help="Nombre ciudad de destino",
-        required=True
+        "SIGLADES", type=str, help="Nombre ciudad de destino", required=True
     )
 
     parser.add_argument(
-        "periodo_dia",
-        type=str, 
-        help="mañana, tarde, noche",
-        required=True
+        "periodo_dia", type=str, help="mañana, tarde, noche", required=True
     )
 
     return parser

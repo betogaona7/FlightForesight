@@ -1,4 +1,3 @@
-
 """FlightForesight API routes"""
 
 from .routes import ns as routes_ns
