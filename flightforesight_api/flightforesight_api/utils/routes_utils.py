@@ -24,6 +24,13 @@ def add_flight_arguments(parser: RequestParser) -> RequestParser:
     )
 
     parser.add_argument(
+        "temporada_alta",
+        type=int, 
+        help="1 si es temporada alta, 0 si no.",
+        required=True
+    )
+
+    parser.add_argument(
         "DIANOM",
         type=str, 
         help="Día de la semana de operacion del vuelo.",

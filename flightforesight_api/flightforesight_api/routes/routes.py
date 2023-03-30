@@ -12,6 +12,9 @@ from datetime import datetime, timedelta
 from typing import Dict, Tuple
 from flask_restx.reqparse import RequestParser
 import pickle
+import numpy as np
+
+from ..utils import data_headers_dict
 
 MODEL_PATH = "/home/alberto/Desktop/work_backup/Interviews/FlightForesight/notebooks/model2.pkl"
 
@@ -121,19 +124,34 @@ def predict_flight_delay(flight_args:Dict) -> Tuple[Dict, timedelta]:
 
     # predict if the flight is going to be delayed
     try:
-        # preprocess data to one-hot encoders
-        data = {
-            'DIA': flight_args["DIA"],
-            'MES': flight_args["MES"],
-            'DIANOM': flight_args['DIANOM'],
-            'TIPOVUELO': flight_args['TIPOVUELO'],
-            'OPERA': flight_args['OPERA'],
-            'SIGLAORI': flight_args['SIGLAORI'],
-            'SIGLADES': flight_args['SIGLADES'],
-            'periodo_dia': flight_args['periodo_dia']
-        }
-        prediction = model.predict(data)
+        # create new data one-hot vector
+        new_data = data_headers_dict.copy()
 
+        # update dict values
+        new_data['DIA'] = flight_args["DIA"]
+        new_data['MES'] = flight_args["MES"]
+        new_data['temporada_alta'] = flight_args["temporada_alta"]
+
+        cat_vars_names = [
+            "DIANOM_" + str(flight_args["DIANOM"]),
+            "TIPOVUELO_" + str(flight_args["TIPOVUELO"]),
+            "OPERA_" + str(flight_args["OPERA"]),
+            "SIGLAORI_" + str(flight_args["SIGLAORI"]),
+            "SIGLADES_" + str(flight_args["SIGLADES"]),
+            "periodo_dia_" + str(flight_args["periodo_dia"])
+        ]
+
+        for name in cat_vars_names:
+            if name in new_data:
+                new_data[name] = 1
+
+        # covert to numpy
+        x = np.array(list(new_data.values())).reshape(1, -1)
+
+        # predict 
+        prediction = model.predict(x)
+
+        # update response 
         response_output["can_be_delayed"] = "yes" if prediction else "no"
     except Exception as e:
         raise Exception(f"Prediction failed. {e}")
