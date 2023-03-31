@@ -1,5 +1,5 @@
 class Config(object):
-    """default configurations."""
+    """default configurations"""
 
     ENV: str = "development"
     DEBUG: bool = False

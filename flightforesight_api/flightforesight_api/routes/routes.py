@@ -1,7 +1,8 @@
-"""Flask Namespace for FlighttForesight
+"""Flask Namespace for FlightForesight
 
 Available endpoints:
-    - predict/ (GET): endpoint to know if a flight can be delayed or not based on a ML model
+    - predict/ (GET): endpoint to predict if a flight can be delayed or not.
+    - preload/ (GET): loads the ML learning model creating a single instance of it for inference.
 """
 
 from flask_restx import Resource, fields, Namespace
@@ -21,11 +22,9 @@ MODEL_PATH = (
 )
 
 ns = Namespace(
-    name="FlightForesight Delay Predictor",
-    path="/predict",
+    name="FlightForesight Delay Flight Predictor",
     description="collection of API endpoints",
 )
-
 
 _delay_prediction_model = None
 
@@ -57,6 +56,7 @@ def delay_prediction_error(e: Exception):
 
 @ns.route("/preload")
 class FFPreloadApi(Resource):
+    # define structure
     preload_mlmodel_response = ns.model(
         "Preload Response", {"load_time": fields.String()}
     )
@@ -91,7 +91,7 @@ class FFPredictDelay(Resource):
 
 
 def predict_flight_delay(flight_args: Dict) -> Tuple[Dict, timedelta]:
-    """predict if the flight is going to be delayed
+    """predict whether the flight is going to be delayed or not
 
     Args:
         flight_args (Dict): request arguments
@@ -110,16 +110,17 @@ def predict_flight_delay(flight_args: Dict) -> Tuple[Dict, timedelta]:
     except Exception as e:
         raise Exception(f"Model fetch failed. {e}")
 
-    # predict if the flight is going to be delayed
+    # predict
     try:
-        # create new data one-hot vector
+        # create new data input
         new_data = data_headers_dict.copy()
 
-        # update dict values
+        # update numerical dict values
         new_data["DIA"] = flight_args["DIA"]
         new_data["MES"] = flight_args["MES"]
         new_data["temporada_alta"] = flight_args["temporada_alta"]
 
+        # update categorical dict values
         cat_vars_names = [
             "DIANOM_" + str(flight_args["DIANOM"]),
             "TIPOVUELO_" + str(flight_args["TIPOVUELO"]),
@@ -133,10 +134,10 @@ def predict_flight_delay(flight_args: Dict) -> Tuple[Dict, timedelta]:
             if name in new_data:
                 new_data[name] = 1
 
-        # covert to numpy
+        # convert to one-hot encoded vector
         x = np.array(list(new_data.values())).reshape(1, -1)
 
-        # predict
+        # make inference
         prediction = model.predict(x)
 
         # update response
@@ -156,6 +157,11 @@ def predict_flight_delay(flight_args: Dict) -> Tuple[Dict, timedelta]:
 
 
 def get_delay_prediction_model():
+    """Singleton to create a model instance
+
+    Returns:
+        Tuple[gxboost, timedelta]: model, compute time
+    """
     global _delay_prediction_model
 
     if not _delay_prediction_model:

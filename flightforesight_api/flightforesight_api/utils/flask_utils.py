@@ -3,14 +3,14 @@ from flask_restx import Api
 
 
 def flask_server(name: str = None, default_config: object = None) -> Flask:
-    """create a flask app instance.
+    """create a Flask app instance.
 
     Args:
-        name (str, optional): _description_. Defaults to None.
-        default_config (object, optional): _description_. Defaults to None.
+        name (str, optional): name of the application. Defaults to None.
+        default_config (object, optional): default configuration object to use. Defaults to None.
 
     Returns:
-        Flask: _description_
+        Flask: a Flask app instance
     """
     # get server name
     server_name = name if name is not None else __name__
@@ -25,16 +25,17 @@ def flask_server(name: str = None, default_config: object = None) -> Flask:
 
 
 def restx_api(**kwargs) -> Api:
-    """create a flask_restx app instance.
+    """create a Flask_restx app instance.
 
     Returns:
         Api: flask_restx app instance.
     """
 
+    # create instance
     api = Api(**kwargs)
 
+    # check for https
     if kwargs.get("enable_https", False):
-
         @property
         def specs_url(self):
             return url_for(self.endpoint("specs"), _external=True, _scheme="https")

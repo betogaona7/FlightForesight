@@ -2,7 +2,7 @@ from flask_restx.reqparse import RequestParser
 
 
 def add_flight_arguments(parser: RequestParser) -> RequestParser:
-    """add flight arguments for the FlightForesight API endpoints.
+    """add flight arguments for the FlightForesight predict API endpoint.
 
     Args:
         parser (RequestParser): request argument parser

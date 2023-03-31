@@ -1,3 +1,4 @@
+# Input template for inference in /predict endpoint
 data_headers_dict = {
     "DIA": 0,
     "MES": 0,

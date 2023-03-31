@@ -128,3 +128,5 @@ venv.bak/
 .history
 .ionide
 
+### lua files 
+*.lua

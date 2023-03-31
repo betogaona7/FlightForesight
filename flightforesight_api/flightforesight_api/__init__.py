@@ -10,9 +10,6 @@ api = restx_api(title="FlightForesight", version=__version__)
 def create_app() -> Flask:
     """initialise flask app
 
-    Args:
-        config_file (str, optional): path to config file. Defaults to None.
-
     Returns:
         Flask: flask instance
     """
