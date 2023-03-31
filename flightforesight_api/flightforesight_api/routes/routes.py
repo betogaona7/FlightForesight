@@ -17,9 +17,7 @@ import os
 
 from ..utils import data_headers_dict
 
-MODEL_PATH = (
-    os.path.join(os.getcwd(), "assets/models/model.pkl")
-)
+MODEL_PATH = os.path.join(os.getcwd(), "assets/models/model.pkl")
 
 ns = Namespace(
     name="FlightForesight Delay Flight Predictor",
