@@ -1,0 +1,26 @@
+---
+name: code_check
+
+on: 
+  push:
+      branches:
+          -main 
+  pull_requests:
+      types: [opened, synchronize, reopened]
+
+jobs: 
+  code_check:
+      runs-on: ubuntu-18.04
+      steps:
+        - name: Code Checkout
+          uses: actions/checkout@v2
+
+        - name: Set up Python 3.10
+          uses: actions/setup-python@v2 
+          with: 
+            python-version: 3.10 
+
+        - name: Code Check 
+          run: |
+            pip install pre-commit 
+            pre-commit run --all --show-diff-on-failure
