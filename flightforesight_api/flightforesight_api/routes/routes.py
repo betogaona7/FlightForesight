@@ -12,11 +12,12 @@ from typing import Dict, Tuple
 from flask_restx.reqparse import RequestParser
 import pickle
 import numpy as np
+import os
 
 from ..utils import data_headers_dict
 
 MODEL_PATH = (
-    "/home/alberto/Desktop/work_backup/Interviews/FlightForesight/notebooks/model2.pkl"
+    os.path.join(os.getcwd(), "assets/models/model.pkl")
 )
 
 ns = Namespace(
