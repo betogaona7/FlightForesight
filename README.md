@@ -30,7 +30,7 @@ The API currently has only two endpoints under the namespace `/foresight/v1`:
 
 ## ML Model 
 
-Please refer to [build_model](assets/notebooks/) 
+Pre-trained model is saved under `assets/models`. To read how it was created please refer to [build_model.ipynb](assets/notebooks/) 
 
 ## Stress test
 
