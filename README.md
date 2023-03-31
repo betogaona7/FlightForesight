@@ -4,13 +4,13 @@ API to predict whether a flight can be delayed or not.
 
 ## Installation 
 
-Run the following command:
+Run the following command to create a [conda](https://docs.conda.io/projects/conda/en/latest/user-guide/install/linux.html) env with all the packages needed:
 
 ```
 conda env create -f conda_env.yaml
 ```
 
-Note: be sure of having [conda](https://docs.conda.io/projects/conda/en/latest/user-guide/install/linux.html) installed. 
+You can access to the env with the command `source activate f-foresight`
 
 ## Testing
 
