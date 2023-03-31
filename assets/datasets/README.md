@@ -42,7 +42,8 @@ The next are the possibles values for each column, this is relevant for predicti
 
 You can check the possible values for the categorical features (Vlo-I, Ori-I,Des-I, Emp-I, Vlo-O, Ori-O, Des-O, Emp-O, DIANOM, TIPOVUELO, OPERA, SIGLAORI, SIGLADES, temporada_alta, dif_min, atraso_15, periodo_dia) with the following code snippet: 
 
-```
+```python
+
 import pandas as pd
 
 df = pd.read_csv('SCL_flights_full.csv') # path to csv file
@@ -50,4 +51,5 @@ df = pd.read_csv('SCL_flights_full.csv') # path to csv file
 feature_name = "OPERA" # name of the categorical feature
 for value in df[feature_name].unique():
     print(value)
+    
 ```

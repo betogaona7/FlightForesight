@@ -7,7 +7,7 @@ API to predict whether a flight can be delayed or not.
 Run the following command:
 
 ```
-    conda env create -f conda_env.yaml
+conda env create -f conda_env.yaml
 ```
 
 Note: be sure of having [conda](https://docs.conda.io/projects/conda/en/latest/user-guide/install/linux.html) installed. 
@@ -17,7 +17,7 @@ Note: be sure of having [conda](https://docs.conda.io/projects/conda/en/latest/u
 Run the following command:
 
 ```
-    bash flightforesight_api/scripts/run_flask_server.sh 
+bash flightforesight_api/scripts/run_flask_server.sh 
 ```
 
 It will start the server with the default configuration that is set in `flightforesight_api/flightforesight_api/settings.py`. You can access the endpoints docs using the Swagger UI at http://127.0.0.1:8081/ff_docs/
@@ -37,7 +37,7 @@ Pre-trained model is saved under `assets/models`. To read how it was created ple
 Using the [stress_test.lua](flightforesight_api/scripts/stress_test.lua) script, update the `request_rate` and adapt the following command based on your machine:
 
 ```
-    wrk -t8 -c2000 -d140s -s flightforesight_api/scripts/stress_test.lua http://127.0.0.1:8081
+wrk -t8 -c2000 -d140s -s flightforesight_api/scripts/stress_test.lua http://127.0.0.1:8081
 ```
 
 For example if the target is to do at least 50000 requests in 45 seconds, then 
