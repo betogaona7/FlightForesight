@@ -36,6 +36,7 @@ def restx_api(**kwargs) -> Api:
 
     # check for https
     if kwargs.get("enable_https", False):
+
         @property
         def specs_url(self):
             return url_for(self.endpoint("specs"), _external=True, _scheme="https")
